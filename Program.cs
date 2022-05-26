@@ -7,61 +7,54 @@ namespace csharp_biblioteca_db
     {
         static void Main(string[] args)
         {
-            Biblioteca b = new Biblioteca("Civica");
-            List<Autore> lAutoreLibro = new List<Autore>();
-            Autore AutoreLaGrandeCavalcata = new Autore("Mario","Rossi", "mariorossi@gmail.com");
-            lAutoreLibro.Add(AutoreLaGrandeCavalcata);  
-            b.AggiungiLibro(00002,"La grande Cavalcata", 1960, "avventura", 200, "SS1", lAutoreLibro);
-
-            //b.AggiungiScaffale("SS1");
-            //b.AggiungiScaffale("SS2");
-            //b.AggiungiScaffale("SS3");
-            //b.ScaffaliBiblioteca.ForEach(item => Console.WriteLine(item.Numero));
-/*
-            Console.WriteLine("Lista operazioni: ");
-            Console.WriteLine("\t1: cerca Libro per Autore");
             Console.WriteLine("Cosa vuoi fare?");
-            string sAppo = Console.ReadLine();
-            while(sAppo != "")
+            Console.WriteLine("1: Aggiungi Libro con relativi Autori");
+            Console.WriteLine("2: Aggiungi Scaffale");
+            string sResp = Console.ReadLine();
+            int iResp = Convert.ToInt32(sResp);
+
+            Biblioteca b = new Biblioteca("Civica");
+
+            if(sResp != "")
             {
-                b.GestisciOperazioneBiblioteca(Convert.ToInt32(sAppo));
+                if(iResp == 1)
+                {
+                    Console.WriteLine("Inserisci Nome Autore");
+                    string sNomeAutore = Console.ReadLine();
+                    Console.WriteLine("Inserisci Cognome Autore");
+                    string sCognomeAutore = Console.ReadLine();
+                    Console.WriteLine("Inserisci Email");
+                    string sEmailAutore = Console.ReadLine();
+                    List<Autore> lAutoriLibro = new List<Autore>();
+                    Autore AutoreLibro = new Autore(sNomeAutore, sCognomeAutore, sEmailAutore);
+                    lAutoriLibro.Add(AutoreLibro);
+                    Console.WriteLine("Inserisci Il titolo del Libro");
+                    string sTitolo = Console.ReadLine();
+                    Console.WriteLine("Inserisci Anno di pubblicazione");
+                    string sAnno = Console.ReadLine();
+                    int iAnno = Convert.ToInt32(sAnno);
+                    Console.WriteLine("Inserisci genere");
+                    string sGenere = Console.ReadLine();
+                    Console.WriteLine("Inserisci Numero di Pagine");
+                    string sNumPagine = Console.ReadLine();
+                    int iNumPagine = Convert.ToInt32(sNumPagine);   
+                    Console.WriteLine("Inserisci Scaffale");
+                    string sScaffale = Console.ReadLine();
+                    b.AggiungiLibro(db.GetUniqueId(), sTitolo, iAnno, sGenere, iNumPagine, sScaffale, lAutoriLibro);
+                }
+                if (iResp == 2)
+                {
+                    Console.WriteLine("Inserisci il codice dello scaffale");
+                    string sCodScaffale = Console.ReadLine();
+                    b.AggiungiScaffale(sCodScaffale);
+                    b.ScaffaliBiblioteca.ForEach(item => Console.WriteLine(item.Numero));
+                }
             }
-                
-            Libro l1 = new Libro("ISBN1", "Titolo 1", 2009, "Storia", 220);
- 
-            Autore a1 = new Autore("Nome 1", "Cognome 1");
-            Autore a2 = new Autore("Nome 2", "Cognome 2");
- 
-               
-                
- 
-            /*
-              
- 
-            #region "Libro 2"
-            Libro l2 = new Libro("ISBN2", "Titolo 2", 2009, "Storia", 130);
- 
-            Autore a3 = new Autore("Nome 3", "Cognome 3");
-            Autore a4 = new Autore("Nome 4", "Cognome 4");
- 
-            l2.Autori.Add(a3);
-            l2.Autori.Add(a4);
- 
-            l2.Scaffale = s2;
-               
-            #endregion
- 
-            #region "DVD"
-            DVD dvd1 = new DVD("Codice1", "Titolo 3", 2019, "Storia", 130);
- 
-            dvd1.Autori.Add(a3);
- 
-            dvd1.Scaffale = s3;
-                
-            #endregion
- 
-            Utente u1 = new Utente("Nome 1", "Cognome 1", "Telefono 1", "Email 1", "Password 1");
- 
+            
+
+            
+/*
+          
               
  
             Prestito p1 = new Prestito("P00001", new DateTime(2019,1, 20),  new DateTime(2019, 2, 20), u1, l1);
