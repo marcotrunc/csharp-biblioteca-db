@@ -31,23 +31,24 @@ namespace csharp_biblioteca_db
         public void AggiungiLibro(long iCodice, string sTitolo, int iAnno, string sSettore, int iNumPagine, string sScaffale, List<Autore> lListaAutori)
         {
             Libro lib1 = new Libro(iCodice,sTitolo, iAnno,sSettore, iNumPagine, sScaffale);
-            
             db.libroAdd(lib1, lListaAutori);
         }
-        public List<Documento> SearchByAutore (string sAutore)
+            
+        public void AggiungiDvd(long iCodice, string sTitolo, int iAnno, string sSettore, int iDurata, string sScaffale, List<Autore> lListaAutori)
         {
-            /* 
-                SELECT titolo, Settore, Stato, Tipo
-                FROM Docuemnti, AUTORE_DOCUMENTI
-                INNER JOIN(Autori_Documenti) ON Documenti.codice_documento = Autori_Documenti.
-             */
-            return null;
+            DVD dvd1 = new DVD(iCodice, sTitolo, iAnno, sSettore, iDurata, sScaffale);
+            db.dvdAdd(dvd1, lListaAutori);
+        }
+
+        public void CercaAutore(string sNome, string sCogn)
+        {
+            db.CercaPerAutore(sNome, sCogn);
         }
         public void StampaListaDocumenti(List<Documento> lListaDoc)
         {
             return;
         }
-        public int GestisciOperazioneBiblioteca(int iCodiceOperazione)
+        /*public int GestisciOperazioneBiblioteca(int iCodiceOperazione)
         {
             List<Documento> lRes;
             string sAppo;
@@ -57,7 +58,7 @@ namespace csharp_biblioteca_db
                     {
                         Console.WriteLine("Inserisci Autore:");
                         sAppo = Console.ReadLine();
-                        lRes = SearchByAutore(sAppo);
+                        lRes = CercaAutore(sAppo);
                         if (lRes == null)
                             return 1;
                         else
@@ -66,7 +67,6 @@ namespace csharp_biblioteca_db
                     }
             }    
             return 0;
-        }
-
+        }*/
     }
 }

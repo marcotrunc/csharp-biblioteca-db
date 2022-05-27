@@ -46,5 +46,14 @@ namespace csharp_biblioteca_db
         {
             this.Stato = Stato.Disponibile;
         }
+
+        internal static string GenereCasuale()
+        {
+            string[] generi = new string[] { "Biografia e autobiografia", "Romanzo Storico", "Giallo", "Avventura", "Azione", "Fantascienza", "Distopatia", "Fantasy" };
+            Random rand = new Random();
+            int genericRandom = rand.Next(0, generi.Length);
+            string res = generi[genericRandom];
+            return res;
+        }
     }
 }

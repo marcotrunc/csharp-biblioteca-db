@@ -7,17 +7,53 @@ namespace csharp_biblioteca_db
     {
         static void Main(string[] args)
         {
+            Biblioteca b = new Biblioteca("Civica");
+            /*StreamReader reader = new StreamReader("elenco.txt");
+            Random rand = new Random(); 
+            string linea;
+            while ((linea = reader.ReadLine()) != null)
+            {
+                var vett =linea.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);  
+                string s = vett[0];
+                var cn = s.Split(new char[] { ' ' });
+                string nome = cn[0];
+                string cognome = "";
+                try
+                {
+                    if (cognome.Length == 0)
+                        cognome = "n.d.";
+                    else
+                        cognome = s.Substring(cn[0].Length + 1);
+
+                }
+                catch(Exception ex)
+                {
+                    throw new Exception(ex.Message);    
+                }
+                string titolo = vett[1];
+                
+                List<Autore> lAutoriLibro = new List<Autore>();
+                Autore AutoreLibro = new Autore(nome, cognome, "nd");
+                lAutoriLibro.Add(AutoreLibro);
+                int iGenerico = rand.Next(1700, 2022);
+
+                b.AggiungiLibro(db.GetUniqueId(), titolo, iGenerico, Documento.GenereCasuale(), iGenerico, "SS1", lAutoriLibro);
+            }
+            Environment.Exit(-1);
+            */
+       
             Console.WriteLine("Cosa vuoi fare?");
             Console.WriteLine("1: Aggiungi Libro con relativi Autori");
-            Console.WriteLine("2: Aggiungi Scaffale");
+            Console.WriteLine("2: Aggiungi DVD con relativi Autori");
+            Console.WriteLine("3: Aggiungi Scaffale");
+            Console.WriteLine("4: Cerca Documento per Autore");
             string sResp = Console.ReadLine();
             int iResp = Convert.ToInt32(sResp);
 
-            Biblioteca b = new Biblioteca("Civica");
 
             if(sResp != "")
             {
-                if(iResp == 1)
+                if(iResp == 1 || iResp == 2)
                 {
                     Console.WriteLine("Inserisci Nome Autore");
                     string sNomeAutore = Console.ReadLine();
@@ -28,26 +64,44 @@ namespace csharp_biblioteca_db
                     List<Autore> lAutoriLibro = new List<Autore>();
                     Autore AutoreLibro = new Autore(sNomeAutore, sCognomeAutore, sEmailAutore);
                     lAutoriLibro.Add(AutoreLibro);
-                    Console.WriteLine("Inserisci Il titolo del Libro");
+                    Console.WriteLine("Inserisci Il Titolo");
                     string sTitolo = Console.ReadLine();
-                    Console.WriteLine("Inserisci Anno di pubblicazione");
+                    Console.WriteLine("Inserisci l'anno di pubblicazione");
                     string sAnno = Console.ReadLine();
                     int iAnno = Convert.ToInt32(sAnno);
-                    Console.WriteLine("Inserisci genere");
+                    Console.WriteLine("Inserisci il genere");
                     string sGenere = Console.ReadLine();
-                    Console.WriteLine("Inserisci Numero di Pagine");
-                    string sNumPagine = Console.ReadLine();
-                    int iNumPagine = Convert.ToInt32(sNumPagine);   
                     Console.WriteLine("Inserisci Scaffale");
                     string sScaffale = Console.ReadLine();
-                    b.AggiungiLibro(db.GetUniqueId(), sTitolo, iAnno, sGenere, iNumPagine, sScaffale, lAutoriLibro);
+                    if(iResp == 1)
+                    {
+                        Console.WriteLine("Inserisci Numero di Pagine");
+                        string sNumPagine = Console.ReadLine();
+                        int iNumPagine = Convert.ToInt32(sNumPagine);   
+                        b.AggiungiLibro(db.GetUniqueId(), sTitolo, iAnno, sGenere, iNumPagine, sScaffale, lAutoriLibro);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Inserisci Durata");
+                        string sDurata = Console.ReadLine();
+                        int iDurata = Convert.ToInt32(sDurata);
+                        b.AggiungiDvd(db.GetUniqueId(), sTitolo, iAnno, sGenere, iDurata, sScaffale, lAutoriLibro);
+                    }
                 }
-                if (iResp == 2)
+                if (iResp == 3)
                 {
                     Console.WriteLine("Inserisci il codice dello scaffale");
                     string sCodScaffale = Console.ReadLine();
                     b.AggiungiScaffale(sCodScaffale);
                     b.ScaffaliBiblioteca.ForEach(item => Console.WriteLine(item.Numero));
+                }
+                if(iResp == 4)
+                {
+                    Console.WriteLine("Inserisci Nome Autore");
+                    string sNomAutCercato = Console.ReadLine();
+                    Console.WriteLine("Inserisci Cognome Autore");
+                    string sCogAutCercato = Console.ReadLine();
+                    b.CercaAutore(sNomAutCercato, sCogAutCercato);
                 }
             }
             
